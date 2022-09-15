@@ -1,0 +1,20 @@
+version: 2
+ethernets:
+  eth0:
+    dhcp4: false
+    addresses: [ "172.22.10.13/25" ]
+    nameservers:
+      addresses: [ "10.1.2.5" ]
+    routes:
+    - to: 0.0.0.0/0
+      via: 172.22.72.1
+      metric: 10
+  eth1:
+    dhcp4: false
+    addresses: [ "172.22.10.141/25" ]
+    nameservers:
+      addresses: [ "10.1.2.5" ]
+    routes:
+    - to: 0.0.0.0/0
+      via: 172.22.10.129
+      metric: 10
