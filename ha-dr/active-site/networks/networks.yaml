@@ -1,0 +1,26 @@
+---
+networks:
+  - name: gw-frontend-network-primary
+    gateway: 172.22.10.1
+    netmask: 255.255.255.128
+    suffix: 25
+    start: 172.22.10.2
+    end: 172.22.10.126
+  - name: gw-backend-network-primary
+    gateway: 172.22.10.129
+    netmask: 255.255.255.128
+    suffix: 25
+    start: 172.22.10.130
+    end: 172.22.10.254
+  - name: subsys-network-primary
+    gateway: 192.168.72.1
+    netmask: 255.255.255.128
+    suffix: 25
+    start: 192.168.72.2
+    end: 192.168.72.126
+  - name: management-network-primary
+    gateway: 10.1.2.1
+    netmask: 255.255.255.0
+    suffix: 24
+    start: 10.1.2.2
+    end: 10.1.2.254

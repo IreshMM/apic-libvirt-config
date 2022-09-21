@@ -1,0 +1,9 @@
+<network>
+  <name>{{ name }}</name>
+  <forward mode="nat"/>
+  <ip address="{{ gateway }}" netmask="{{ netmask }}">
+    <dhcp>
+      <range start='{{ start }}' end='{{ end }}'/>
+    </dhcp>
+  </ip>
+</network>

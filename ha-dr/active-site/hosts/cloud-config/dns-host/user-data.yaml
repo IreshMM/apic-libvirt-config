@@ -1,0 +1,14 @@
+#cloud-config
+hostname: dns-host
+fqdn: dns-host.nsb.local
+users:
+  - default
+  - name: iresh
+    gecos: Iresh Dissanayaka
+    groups: sudo
+    shell: /bin/bash
+    plain_text_passwd: admin123
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCSChzHzjRBBt0GqyG9dU+PJZuOVKvfz4cPV4W430rHDPWH+Mqw0bhi+ytNmvwu8ZjZdmrBEv21PB5zscMWbbedoWgOgToln2jcP6mo6Ah6aAnTAbkiwG0f6XG4ORheeQsvLhJp4hIPcTt+ggqW8MJbC6QIGunfIe2Pk6RSJWFsqlSVhIHG8POywTegeq4idB5VeT674EYYjzX2eL2VLFAerKCm4lTs2qzdPCLw2+is40yaLZt6fjYC4P2hTDSt9IJgfDrIbl6GrOfCnh/E2RDGfRgAzqynLMHHI5b7aZglnamPyCgAssYkMcl7yrZjY428AjGsY3fyA7wvxfKSPZaT iresh@kvm-host
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC64dK7V6GBPV77TzGbsMlEKvZh0earMCCYL7lSseqpLECLVHrO7AjdDjM8jMGezPD4sHGAJN105ZZdu887M4+7KufuUF/CooVJ3e7iH/aL98LZBXxgbsebxvPJael2MULXO6koK26QHrY9FwtVjc1BQWG7MbCaCH3CjhNa+nefEaBhGj+0jnd2eDZjUCTMzFt/H50Ref9tRcAiQCwG9KBJVKMrhiSrjiKcfowVFNbvBunlLFb0Gy79UHP4AVHMl3burUS9cZlU092lBvY+oyTZrKucgm8lGB+d8t9uiMfGGv9uYmka20hPd672N+qa/PdwESXFkd9QoOVkVp3FpqA40TNyeW0DKIk4BOnn3xVzgs0SXyXqF7W8a4rltR0GTqvQ93FC6kdTwlQUhXEjXdUMM/zNJRXALV0Dw/av4QgON18a4UoU2Xd8jxBsQDf7ENlWXdfavFn6KhI/iY3IaOyezfnzlj5qbQBLom7nqFJj1YZW1C6rK51oCf9q2bQPrF0= iresh@iresh-pc

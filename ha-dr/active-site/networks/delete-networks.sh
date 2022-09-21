@@ -1,0 +1,1 @@
+../../../common-scripts/delete-networks.sh
