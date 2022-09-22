@@ -1,0 +1,1 @@
+../../../common-scripts/shutdown-hosts.sh
