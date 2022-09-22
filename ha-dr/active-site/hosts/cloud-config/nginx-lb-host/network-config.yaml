@@ -4,6 +4,7 @@ ethernets:
     dhcp4: false
     addresses: [ "172.22.10.50/25" ]
     nameservers:
+      search: [ "nsb.local" ]
       addresses: [ "10.1.2.5" ]
     routes:
     - to: 0.0.0.0/0
@@ -13,6 +14,7 @@ ethernets:
     dhcp4: false
     addresses: [ "172.22.10.250/25" ]
     nameservers:
+      search: [ "nsb.local" ]
       addresses: [ "10.1.2.5" ]
     routes:
     - to: 0.0.0.0/0
