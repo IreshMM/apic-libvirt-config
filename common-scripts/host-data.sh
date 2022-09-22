@@ -50,8 +50,8 @@ merge_dict portal subsys_template _portal
 declare -A datapower_template=( \
     ["cpus"]=4
     ["memory"]=8192 \
-    ["network_1"]=$GW_BE_NETWORK \
-    ["network_2"]=$GW_FE_NETWORK \
+    ["network_1"]=$GW_FE_NETWORK \
+    ["network_2"]=$GW_BE_NETWORK \
     ["disk_1_size"]=20 \
     ["os_variant"]="centos7" \
     ["image"]=${CLOUD_IMAGES_PATH}/CentOS-7-x86_64-GenericCloud.qcow2 \
