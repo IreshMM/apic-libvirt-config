@@ -1,9 +1,12 @@
 #!/bin/bash
 
+SCRIPT_ROOT="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+source ${SCRIPT_ROOT}/../site-params.sh
+
 NETWORKS_COUNT=$(($(yq '.networks | length' networks.yaml) - 1))
 
 for net_num in $(seq 0 $NETWORKS_COUNT); do
-    yq -y ".networks[$net_num]" networks.yaml \
+    yglu networks.yaml | yq -y ".networks[$net_num]" \
         | j2 --format=yaml network.xml.j2 \
         > /tmp/network-$net_num.xml
     virsh net-define /tmp/network-$net_num.xml --validate
