@@ -1,0 +1,28 @@
+version: 2
+ethernets:
+  enp1s0:
+    dhcp4: false
+    addresses:
+      - 172.22.10.50/25
+    nameservers:
+      search:
+        - nsb.local
+      addresses:
+        - 10.1.2.5
+    routes:
+      - to: 0.0.0.0/0
+        via: 172.22.10.1
+        metric: 10
+  enp2s0:
+    dhcp4: false
+    addresses:
+      - 172.22.10.250/25
+    nameservers:
+      search:
+        - nsb.local
+      addresses:
+        - 10.1.2.5
+    routes:
+      - to: 0.0.0.0/0
+        via: 172.22.10.129
+        metric: 10

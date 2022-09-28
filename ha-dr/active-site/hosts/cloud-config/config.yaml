@@ -1,0 +1,113 @@
+---
+imports:
+  networks: !- $import('networks.yaml')
+misc:
+  networks: !? .imports.networks.networks
+hosts:
+  generators:
+    nameservers: &nameservers
+      - "10.1.2.5"
+
+    infra_nodes: !-
+      items: !-
+        - name: jump-host
+          hostname: jump-host
+          fqdn: jump-host.nsb.local
+          network_1: !? .misc.networks.where($.name = 'management-network-' + $env.SITE_NAME).first()
+          address_1: "10.1.2.101/24"
+          eth_index: 0
+          eth_prefix: eth
+          eth_suffix: ''
+          group: wheel
+        - name: nginx-lb-host
+          hostname: nginx-lb-host
+          fqdn: nginx-lb-host.nsb.local
+          network_1: !? .misc.networks.where($.name = 'gw-frontend-network-' + $env.SITE_NAME).first()
+          address_1: "172.22.10.50/25"
+          network_2: !? .misc.networks.where($.name = 'gw-backend-network-' + $env.SITE_NAME).first()
+          address_2: "172.22.10.250/25"
+          eth_index: 1
+          eth_prefix: enp
+          eth_suffix: s0
+          group: sudo
+        - name: dns-host
+          hostname: dns-host
+          fqdn: dns-host.nsb.local
+          network_1: !? .misc.networks.where($.name = 'management-network-' + $env.SITE_NAME).first()
+          address_1: "10.1.2.5/24"
+          eth_index: 1
+          eth_prefix: enp
+          eth_suffix: s0
+          group: sudo
+
+    datapower: !-
+      items:
+        - ? !for "sequence().take(3)"
+          : !()
+            - name: !? '"datapower-{0}".format($+1)'
+              hostname: !? '"pr-apic-dpgw{0}".format($+1)'
+              fqdn: !? '"pr-apic-dpgw{0}.nsb.local".format($+1)'
+              address_1: !? '"172.22.10.{0}/25".format($+10)'
+              address_2: !? '"172.22.10.{0}/25".format($+138)'
+              network_1: !? .misc.networks.where($.name = 'gw-frontend-network-' + $env.SITE_NAME).first()
+              network_2: !? .misc.networks.where($.name = 'gw-backend-network-' + $env.SITE_NAME).first()
+              eth_index: 0
+              eth_prefix: eth
+              eth_suffix: ''
+              group: wheel
+
+    nodes:
+      items: !? $_.hosts.generators.infra_nodes.items.concat($_.hosts.generators.datapower.items)
+      hosts:
+        - ? !for $_.hosts.generators.nodes.items
+          : !()
+            - cloud_config:
+                hostname: !? $.hostname
+                fqdn: !? $.fqdn
+                users:
+                  - default
+                  - name: iresh
+                    gecos: Iresh Dissanayaka
+                    groups: !? $.group
+                    shell: /bin/bash
+                    plain_text_passwd: admin123
+                    lock_passwd: false
+                    ssh_authorized_keys: [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCSChzHzjRBBt0GqyG9dU+PJZuOVKvfz4cPV4W430rHDPWH+Mqw0bhi+ytNmvwu8ZjZdmrBEv21PB5zscMWbbedoWgOgToln2jcP6mo6Ah6aAnTAbkiwG0f6XG4ORheeQsvLhJp4hIPcTt+ggqW8MJbC6QIGunfIe2Pk6RSJWFsqlSVhIHG8POywTegeq4idB5VeT674EYYjzX2eL2VLFAerKCm4lTs2qzdPCLw2+is40yaLZt6fjYC4P2hTDSt9IJgfDrIbl6GrOfCnh/E2RDGfRgAzqynLMHHI5b7aZglnamPyCgAssYkMcl7yrZjY428AjGsY3fyA7wvxfKSPZaT iresh@kvm-host" ]
+                !if $.name.startsWith('datapower'):
+                  runcmd:
+                      - 'sed -i s/BOOTPROTO=dhcp/BOOTPROTO=static/ /etc/sysconfig/network-scripts/ifcfg-eth*'
+                      - 'echo "1    rt2" >> /etc/iproute2/rt_tables'
+                      - !? '"echo \"default via {0} table rt2\" > /etc/sysconfig/network-scripts/route-eth0".format($.network_1.gateway)'
+                      - !? '"echo -e \"from {0} table rt2\\nto {1}/{2} table rt2\" > /etc/sysconfig/network-scripts/rule-eth0".format($.network_1.address, $.network_1.address, $.network_1.suffix)' 
+                      - 'ifdown eth0 && sleep 1 && ifup eth0 && sleep 1 && ip a'
+                      - 'ifdown eth1 && sleep 1 && ifup eth1 && sleep 1 && ip a'
+              network_config:
+                version: 2
+                ethernets:
+                  !? '"{0}{1}{2}".format($.eth_prefix, $.eth_index + 0, $.eth_suffix)':
+                    dhcp4: false
+                    addresses:
+                      - !? $.address_1
+                    nameservers:
+                      search: [ "nsb.local" ]
+                      !if not $.name.startsWith('dns-host'):
+                        addresses: *nameservers
+                      !if $.name.startsWith('dns-host'):
+                        addresses:
+                          - '8.8.8.8'
+                    routes:
+                    - to: 0.0.0.0/0
+                      via: !? $.network_1.gateway
+                      metric: 10
+                  !if $.containsKey('network_2'):
+                    !? '"{0}{1}{2}".format($.eth_prefix, $.eth_index + 1, $.eth_suffix)':
+                      dhcp4: false
+                      addresses:
+                        - !? $.address_2
+                      nameservers:
+                        search: [ "nsb.local" ]
+                        addresses: *nameservers
+                      routes:
+                      - to: 0.0.0.0/0
+                        via: !? $.network_2.gateway
+                        metric: 10
