@@ -1,1 +1,1 @@
-../../../common-scripts/boot-hosts.sh
+../../../common/boot-hosts.sh

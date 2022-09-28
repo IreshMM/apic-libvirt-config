@@ -1,1 +1,1 @@
-../../../common-scripts/create-hosts.sh
+../../../common/create-hosts.sh

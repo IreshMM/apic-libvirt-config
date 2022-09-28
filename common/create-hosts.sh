@@ -22,7 +22,7 @@ for host in $HOSTS; do
         $([ -v 'host_dict[disk_2_size]' ] && echo --disk size=${host_dict[disk_2_size]},format=qcow2,pool=vm-images$([ -v 'host_dict[bus]' ] && echo ,bus=${host_dict[bus]})) \
         --os-variant name=${host_dict[os_variant]} \
         $([ -v 'host_dict[iso]' ] && echo --cdrom ${host_dict[iso]} ) \
-        $([ -v 'host_dict[user_data]' ] && echo --cloud-init user-data=${host_dict[user_data]},network-config=${host_dict[network_config]}) \
+        $([ -v 'host_dict[cloud-init]' ] && echo --cloud-init user-data=cloud-config/config/${host_dict[name]}/user-data.yaml,network-config=cloud-config/config/${host_dict[name]}/network-config.yaml) \
         --events on_reboot=restart,on_poweroff=destroy,on_crash=destroy \
         --import \
         --noautoconsole"

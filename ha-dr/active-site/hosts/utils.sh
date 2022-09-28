@@ -1,1 +1,1 @@
-../../../common-scripts/utils.sh
+../../../common/utils.sh

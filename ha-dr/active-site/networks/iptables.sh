@@ -1,1 +1,1 @@
-../../../common-scripts/iptables.sh
+../../../common/iptables.sh

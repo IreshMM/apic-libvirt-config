@@ -1,1 +1,1 @@
-../../../common-scripts/host-data.sh
+../../../common/host-data.sh

@@ -1,1 +1,1 @@
-../../../common-scripts/create-networks.sh
+../../../common/create-networks.sh

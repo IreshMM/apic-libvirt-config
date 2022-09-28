@@ -55,24 +55,19 @@ declare -A datapower_template=( \
     ["disk_1_size"]=20 \
     ["os_variant"]="centos7" \
     ["image"]=${CLOUD_IMAGES_PATH}/CentOS-7-x86_64-GenericCloud.qcow2 \
+    ["cloud-int"]=1
 )
 
-declare -A _datapower_1=(
+declare -A _datapower_1=( \
     [name]=datapower-1 
-    [network_config]=cloud-config/datapower/datapower-1/network-config.yaml
-    [user_data]=cloud-config/datapower/datapower-1/user-data.yaml
 )
 
 declare -A _datapower_2=( \
     [name]=datapower-2
-    [network_config]=cloud-config/datapower/datapower-2/network-config.yaml
-    [user_data]=cloud-config/datapower/datapower-2/user-data.yaml
 )
 
 declare -A _datapower_3=( \
     [name]=datapower-3 
-    [network_config]=cloud-config/datapower/datapower-3/network-config.yaml
-    [user_data]=cloud-config/datapower/datapower-3/user-data.yaml
 )
 
 declare -A datapower_1
@@ -91,8 +86,7 @@ declare -A dns_host=( \
     [network_1]=$MANAGEMENT_NETWORK
     [image]=${CLOUD_IMAGES_PATH}/jammy-server-cloudimg-amd64-disk-kvm.img
     [os_variant]=ubuntu22.04
-    [user_data]=cloud-config/dns-host/user-data.yaml
-    [network_config]=cloud-config/dns-host/network-config.yaml
+    [cloud-init]=1
 )
 
 declare -A jump_host=(
@@ -103,9 +97,8 @@ declare -A jump_host=(
     [network_1]=$MANAGEMENT_NETWORK
     [image]=${CLOUD_IMAGES_PATH}/Rocky-8-GenericCloud-8.6.20220702.0.x86_64.qcow2
     [os_variant]=rocky8.6
-    [user_data]=cloud-config/jump-host/user-data.yaml
-    [network_config]=cloud-config/jump-host/network-config.yaml
     [vnc_port]=5900
+    [cloud-init]=1
 )
 
 declare -A nginx_lb_host=(
@@ -117,7 +110,6 @@ declare -A nginx_lb_host=(
     [network_2]=$GW_BE_NETWORK
     [image]=${CLOUD_IMAGES_PATH}/jammy-server-cloudimg-amd64-disk-kvm.img
     [os_variant]=ubuntu22.04
-    [user_data]=cloud-config/nginx-lb-host/user-data.yaml
-    [network_config]=cloud-config/nginx-lb-host/network-config.yaml
+    [cloud-init]=1
 )
 

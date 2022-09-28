@@ -1,1 +1,1 @@
-../../../common-scripts/delete-hosts.sh
+../../../common/delete-hosts.sh
