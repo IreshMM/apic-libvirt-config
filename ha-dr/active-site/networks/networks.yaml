@@ -6,21 +6,25 @@ networks:
     suffix: 25
     start: 172.22.10.2
     end: 172.22.10.126
+    address: 172.22.10.0
   - name: !? "'gw-backend-network-' + $env.SITE_NAME"
     gateway: 172.22.10.129
     netmask: 255.255.255.128
     suffix: 25
     start: 172.22.10.130
     end: 172.22.10.254
+    address: 172.22.10.128
   - name: !? "'subsys-network-' + $env.SITE_NAME"
     gateway: 192.168.72.1
     netmask: 255.255.255.128
     suffix: 25
     start: 192.168.72.2
     end: 192.168.72.126
+    address: 192.168.72.0
   - name: !? "'management-network-' + $env.SITE_NAME"
     gateway: 10.1.2.1
     netmask: 255.255.255.0
     suffix: 24
     start: 10.1.2.2
     end: 10.1.2.254
+    address: 10.1.2.0
