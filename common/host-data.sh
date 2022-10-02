@@ -55,7 +55,7 @@ declare -A datapower_template=( \
     ["disk_1_size"]=20 \
     ["os_variant"]="centos7" \
     ["image"]=${CLOUD_IMAGES_PATH}/CentOS-7-x86_64-GenericCloud.qcow2 \
-    ["cloud-int"]=1
+    ["cloud-init"]=1
 )
 
 declare -A _datapower_1=( \
@@ -97,7 +97,7 @@ declare -A jump_host=(
     [network_1]=$MANAGEMENT_NETWORK
     [image]=${CLOUD_IMAGES_PATH}/Rocky-8-GenericCloud-8.6.20220702.0.x86_64.qcow2
     [os_variant]=rocky8.6
-    [vnc_port]=5900
+    [graphics]=1
     [cloud-init]=1
 )
 

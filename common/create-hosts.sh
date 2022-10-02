@@ -16,7 +16,7 @@ for host in $HOSTS; do
         --vcpus ${host_dict[cpus]} \
         --network network=${host_dict[network_1]} \
         $([ -v 'host_dict[network_2]' ] && echo --network network=${host_dict[network_2]} ) \
-        $([ -v 'host_dict[vnc_port]' ] && echo --graphics vnc,listen=0.0.0.0,port=${host_dict[vnc_port]} || echo --graphics none ) \
+        $([ -v 'host_dict[graphics]' ] && echo --graphics vnc,listen=0.0.0.0 || echo --graphics none ) \
         --audio none \
         --disk backing_store=${host_dict[image]},format=qcow2,size=${host_dict[disk_1_size]},pool=vm-images$([ -v 'host_dict[bus]' ] && echo ,bus=${host_dict[bus]}) \
         $([ -v 'host_dict[disk_2_size]' ] && echo --disk size=${host_dict[disk_2_size]},format=qcow2,pool=vm-images$([ -v 'host_dict[bus]' ] && echo ,bus=${host_dict[bus]})) \
