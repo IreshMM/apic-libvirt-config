@@ -2,6 +2,7 @@
 
 SCRIPT_ROOT="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 source ${SCRIPT_ROOT}/../site-params.sh
+export YGLU_ENABLE_ENV=1
 
 enable_routing() {
     SRC_SUBNET="$1"
