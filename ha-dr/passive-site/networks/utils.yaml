@@ -1,0 +1,10 @@
+network_address: !()
+  gateway_segments: !- $.gateway.split('.')
+  netmask_segments: !- $.netmask.split('.')
+  _address: !-
+    - !? "bitwiseAnd(int($this.gateway_segments[0]), int($this.netmask_segments[0]))"
+    - !? "bitwiseAnd(int($this.gateway_segments[1]), int($this.netmask_segments[1]))"
+    - !? "bitwiseAnd(int($this.gateway_segments[2]), int($this.netmask_segments[2]))"
+    - !? "bitwiseAnd(int($this.gateway_segments[3]), int($this.netmask_segments[3]))"
+  address: !? '"{0}.{1}.{2}.{3}".format($this._address[0],$this._address[1],$this._address[2],$this._address[3])'
+

@@ -1,0 +1,1 @@
+../../../common/boot-hosts.sh
