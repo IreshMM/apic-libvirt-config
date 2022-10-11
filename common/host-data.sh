@@ -52,9 +52,9 @@ declare -A datapower_template=( \
     ["memory"]=8192 \
     ["network_1"]=$GW_FE_NETWORK \
     ["network_2"]=$GW_BE_NETWORK \
-    ["disk_1_size"]=20 \
+    ["disk_1_size"]=24 \
     ["os_variant"]="centos7" \
-    ["image"]=${CLOUD_IMAGES_PATH}/CentOS-7-x86_64-GenericCloud.qcow2 \
+    ["image"]=${CLOUD_IMAGES_PATH}/DataPower-10.0.4-CentOS-7-x86_64-GenericCloud.qcow2 \
     ["cloud-init"]=1
 )
 
