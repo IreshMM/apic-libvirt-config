@@ -24,19 +24,19 @@ declare -A subsys_template=( \
 
 declare -A _management=( \
     ["name"]=management \
-    ["image"]=${CLOUD_IMAGES_PATH}/management.qcow2 \
+    ["image"]=${CLOUD_IMAGES_PATH}/APIConnect-management.qcow2 \
     ["iso"]=${ISO_PATH}/mgmt-${SITE_NAME}-plan-out/*.iso \
 )
 
 declare -A _analytics=( \
     ["name"]=analytics \
-    ["image"]=${CLOUD_IMAGES_PATH}/analytics.qcow2 \
+    ["image"]=${CLOUD_IMAGES_PATH}/APIConnect-analytics.qcow2 \
     ["iso"]=${ISO_PATH}/analyt-${SITE_NAME}-plan-out/*.iso \
 )
 
 declare -A _portal=( \
     ["name"]=portal \
-    ["image"]=${CLOUD_IMAGES_PATH}/portal.qcow2 \
+    ["image"]=${CLOUD_IMAGES_PATH}/APIConnect-portal.qcow2 \
     ["iso"]=${ISO_PATH}/port-${SITE_NAME}-plan-out/*.iso \
 )
 
