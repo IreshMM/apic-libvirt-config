@@ -47,8 +47,8 @@ hosts:
             - name: !? '"datapower-{0}".format($+1)'
               hostname: !? '"pr-apic-dpgw{0}".format($+1)'
               fqdn: !? '"pr-apic-dpgw{0}.nsb.local".format($+1)'
-              address_1: !? '"{0}.{1}/25".format($_.imports.params.hosts.datapower.network_1_prefix, $+10)'
-              address_2: !? '"{0}.{1}/25".format($_.imports.params.hosts.datapower.network_1_prefix, $+138)'
+              address_1: !? '"{0}.{1}/25".format($_.imports.params.hosts.datapower.network_1_prefix, $+11)'
+              address_2: !? '"{0}.{1}/25".format($_.imports.params.hosts.datapower.network_1_prefix, $+139)'
               network_1: !? .misc.networks.where($.name = 'gw-frontend-network-' + $env.SITE_NAME).first()
               network_2: !? .misc.networks.where($.name = 'gw-backend-network-' + $env.SITE_NAME).first()
               eth_index: 0
@@ -66,13 +66,17 @@ hosts:
                 fqdn: !? $.fqdn
                 users:
                   - default
+                  - name: root
+                    ssh_authorized_keys:
+                      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCk4kiMZEZl6xXf21wNR0wxLtno4TmpruZoDqjFn5+s4DY2ahjVeBirICB01Dj3h8RgG+ggxMU3VdhvwZjb5HiVeAvxtrRlaAtPfjxZBju1Wtlge/Lg5EKPcY79ZNiGOiuiSgHuKW99hypp0hBNzW1Skln4A4nUOHDBW4qQzv5k0Il8GN/JcLfq93mWkTkPPyXN3JsBmCS+eo37wixIS3ESQr+SfhCkRBFK/Ll0NiQbtpWbVcsoWHGD5KMuAIHlVvBW1fydemNJnm2C3Drbta7dQC5oHJ6NcgC88TK9nzQX10vc19xl5eVPX9XDvlZWebvQOMh//rkWnYkKY1FUHLufrWxZPWAK3Y6w5904FimDDMZCvY8LS2gwmolMacWMHtixs96/n7SpO/mOAsOgeOJikZ4cFeHa6Ec9RwJvnt2Y7o9dbPhCX3bzgJBBA8cmbFthqrSdyEGRD7vCbdR3FKZyju6EZSRK2Niy40uZDtWFMH09N0Za8THJxeWRAaJly0N4D/n+KC1yo3G9JK21fs70ZUhVf8MP+RKBFoBglTrsgh/owPlKAuO12gw/ULItj/Q9MC0HxlIFBPDg46PSvfntVhQ682SgoZaFVTsQOvEcv6TXE8Pu/H4A4DLtVXDv060OUowJLb1fEQny4NmIr5VVyPnpS07aERDwdibsMx/oUQ== iresh@kvm-host
                   - name: iresh
                     gecos: Iresh Dissanayaka
                     groups: !? $.group
                     shell: /bin/bash
                     plain_text_passwd: admin123
                     lock_passwd: false
-                    ssh_authorized_keys: [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCSChzHzjRBBt0GqyG9dU+PJZuOVKvfz4cPV4W430rHDPWH+Mqw0bhi+ytNmvwu8ZjZdmrBEv21PB5zscMWbbedoWgOgToln2jcP6mo6Ah6aAnTAbkiwG0f6XG4ORheeQsvLhJp4hIPcTt+ggqW8MJbC6QIGunfIe2Pk6RSJWFsqlSVhIHG8POywTegeq4idB5VeT674EYYjzX2eL2VLFAerKCm4lTs2qzdPCLw2+is40yaLZt6fjYC4P2hTDSt9IJgfDrIbl6GrOfCnh/E2RDGfRgAzqynLMHHI5b7aZglnamPyCgAssYkMcl7yrZjY428AjGsY3fyA7wvxfKSPZaT iresh@kvm-host" ]
+                    ssh_authorized_keys:
+                      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCk4kiMZEZl6xXf21wNR0wxLtno4TmpruZoDqjFn5+s4DY2ahjVeBirICB01Dj3h8RgG+ggxMU3VdhvwZjb5HiVeAvxtrRlaAtPfjxZBju1Wtlge/Lg5EKPcY79ZNiGOiuiSgHuKW99hypp0hBNzW1Skln4A4nUOHDBW4qQzv5k0Il8GN/JcLfq93mWkTkPPyXN3JsBmCS+eo37wixIS3ESQr+SfhCkRBFK/Ll0NiQbtpWbVcsoWHGD5KMuAIHlVvBW1fydemNJnm2C3Drbta7dQC5oHJ6NcgC88TK9nzQX10vc19xl5eVPX9XDvlZWebvQOMh//rkWnYkKY1FUHLufrWxZPWAK3Y6w5904FimDDMZCvY8LS2gwmolMacWMHtixs96/n7SpO/mOAsOgeOJikZ4cFeHa6Ec9RwJvnt2Y7o9dbPhCX3bzgJBBA8cmbFthqrSdyEGRD7vCbdR3FKZyju6EZSRK2Niy40uZDtWFMH09N0Za8THJxeWRAaJly0N4D/n+KC1yo3G9JK21fs70ZUhVf8MP+RKBFoBglTrsgh/owPlKAuO12gw/ULItj/Q9MC0HxlIFBPDg46PSvfntVhQ682SgoZaFVTsQOvEcv6TXE8Pu/H4A4DLtVXDv060OUowJLb1fEQny4NmIr5VVyPnpS07aERDwdibsMx/oUQ== iresh@kvm-host
                 !if $.name.startsWith('datapower'):
                   runcmd:
                       -
