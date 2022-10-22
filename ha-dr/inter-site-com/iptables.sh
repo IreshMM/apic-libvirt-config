@@ -20,3 +20,7 @@ for i in "${!ACTIVE_SUBNETS[@]}"; do
     enable_routing "${ACTIVE_SUBNETS[$i]}" "${PASSIVE_SUBNETS[$i]}"
     enable_routing "${PASSIVE_SUBNETS[$i]}" "${ACTIVE_SUBNETS[$i]}"
 done
+
+# DNS servers primary secondary communication
+enable_routing "10.1.2.5/32" "10.1.4.5/32"
+enable_routing "10.1.4.5/32" "10.1.2.5/32" 
