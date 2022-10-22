@@ -1,4 +1,5 @@
 ---
+domain: apic.nsb.local
 imports:
   networks: !- $import('networks.yaml')
   params: !? $import('config-params.yaml')
@@ -11,8 +12,8 @@ hosts:
     infra_nodes: !-
       items: !-
         - name: jump-host
-          hostname: jump-host
-          fqdn: jump-host.nsb.local
+          hostname: !? $_.imports.params.hosts.jump_host.hostname
+          fqdn: !? '"{0}.{1}".format($_.imports.params.hosts.jump_host.hostname, $_.domain)'
           network_1: !? .misc.networks.where($.name = 'management-network-' + $env.SITE_NAME).first()
           address_1: !? $_.imports.params.hosts.jump_host.address_1
           eth_index: 0
@@ -20,8 +21,8 @@ hosts:
           eth_suffix: ''
           group: wheel
         - name: nginx-lb-host
-          hostname: nginx-lb-host
-          fqdn: nginx-lb-host.nsb.local
+          hostname: !? $_.imports.params.hosts.nginx_lb_host.hostname
+          fqdn: !? '"{0}.{1}".format($_.imports.params.hosts.nginx_lb_host.hostname, $_.domain)'
           network_1: !? .misc.networks.where($.name = 'gw-frontend-network-' + $env.SITE_NAME).first()
           address_1: !? $_.imports.params.hosts.nginx_lb_host.address_1
           network_2: !? .misc.networks.where($.name = 'gw-backend-network-' + $env.SITE_NAME).first()
@@ -31,8 +32,8 @@ hosts:
           eth_suffix: s0
           group: sudo
         - name: dns-host
-          hostname: dns-host
-          fqdn: dns-host.nsb.local
+          hostname: !? $_.imports.params.hosts.dns_host.hostname
+          fqdn: !? '"{0}.{1}".format($_.imports.params.hosts.dns_host.hostname, $_.domain)'
           network_1: !? .misc.networks.where($.name = 'management-network-' + $env.SITE_NAME).first()
           address_1: !? $_.imports.params.hosts.dns_host.address_1
           eth_index: 1
@@ -45,8 +46,8 @@ hosts:
         - ? !for "sequence().take(3)"
           : !()
             - name: !? '"datapower-{0}".format($+1)'
-              hostname: !? '"pr-apic-dpgw{0}".format($+1)'
-              fqdn: !? '"pr-apic-dpgw{0}.nsb.local".format($+1)'
+              hostname: !? '"{0}-apic-dpgw{1}".format($_.imports.params.hosts.datapower.hostname_prefix, $+1)'
+              fqdn: !? '"{0}-apic-dpgw{1}.{2}".format($_.imports.params.hosts.datapower.hostname_prefix, $+1, $_.domain)'
               address_1: !? '"{0}.{1}/25".format($_.imports.params.hosts.datapower.network_1_prefix, $+11)'
               address_2: !? '"{0}.{1}/25".format($_.imports.params.hosts.datapower.network_1_prefix, $+139)'
               network_1: !? .misc.networks.where($.name = 'gw-frontend-network-' + $env.SITE_NAME).first()
@@ -111,7 +112,8 @@ hosts:
                     addresses:
                       - !? $.address_1
                     nameservers:
-                      search: [ "nsb.local" ]
+                      search:
+                        - !? $_.domain
                       !if not $.name.startsWith('dns-host'):
                         addresses: *nameservers
                       !if $.name.startsWith('dns-host'):
@@ -127,7 +129,8 @@ hosts:
                       addresses:
                         - !? $.address_2
                       nameservers:
-                        search: [ "nsb.local" ]
+                        search:
+                          - !? $_.domain
                         addresses: *nameservers
                       routes:
                       - to: 0.0.0.0/0

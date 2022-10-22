@@ -1,13 +1,17 @@
 ---
 hosts:
   jump_host:
+    hostname: pr-jump-host
     address_1: "10.1.2.101/24"
   nginx_lb_host:
+    hostname: pr-nginx-lb-host
     address_1: "172.22.10.50/25"
     address_2: "172.22.10.250/25"
   dns_host:
+    hostname: pr-dns-host
     address_1: "10.1.2.5/24"
   datapower:
+    hostname_prefix: pr
     network_1_prefix: "172.22.10"
     network_2_prefix: "172.22.10"
 nameservers:

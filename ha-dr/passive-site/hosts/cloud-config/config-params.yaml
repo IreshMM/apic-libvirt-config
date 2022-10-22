@@ -1,13 +1,17 @@
 ---
 hosts:
   jump_host:
+    hostname: dr-jump-host
     address_1: "10.1.4.101/24"
   nginx_lb_host:
+    hostname: dr-nginx-lb-host
     address_1: "172.23.10.50/25"
     address_2: "172.23.10.250/25"
   dns_host:
+    hostname: dr-dns-host
     address_1: "10.1.4.5/24"
   datapower:
+    hostname_prefix: dr
     network_1_prefix: "172.23.10"
     network_2_prefix: "172.23.10"
 nameservers:
