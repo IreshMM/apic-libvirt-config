@@ -5,5 +5,6 @@ source ${SCRIPT_ROOT}/../site-params.sh
 export YGLU_ENABLE_ENV=1
 
 for network in $(yglu networks.yaml | yq -r '.networks[].name'); do
+    virsh net-destroy $network
     virsh net-undefine $network
 done
