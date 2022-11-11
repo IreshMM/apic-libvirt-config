@@ -1,19 +1,19 @@
 ---
 networks:
   - name: !? "'gw-frontend-network-' + $env.SITE_NAME"
-    gateway: 172.22.10.1
+    gateway: 192.168.73.1
     netmask: 255.255.255.128
     suffix: 25
-    start: 172.22.10.2
-    end: 172.22.10.126
-    address: 172.22.10.0
+    start: 192.168.73.2
+    end: 192.168.73.126
+    address: 192.168.73.0
   - name: !? "'gw-backend-network-' + $env.SITE_NAME"
-    gateway: 172.22.10.129
+    gateway: 192.168.73.129
     netmask: 255.255.255.128
     suffix: 25
-    start: 172.22.10.130
-    end: 172.22.10.254
-    address: 172.22.10.128
+    start: 192.168.73.130
+    end: 192.168.73.254
+    address: 192.168.73.128
   - name: !? "'subsys-network-' + $env.SITE_NAME"
     gateway: 192.168.72.1
     netmask: 255.255.255.128
